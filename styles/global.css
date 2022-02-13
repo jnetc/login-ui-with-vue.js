@@ -1,0 +1,40 @@
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-size-adjust: none;
+}
+
+:root {
+  --bg: hsl(240, 69%, 95%);
+  --main: hsl(0, 0%, 100%);
+  --primary: hsl(167, 51%, 46%);
+  --secondary: hsl(165, 22%, 96%);
+  --text-dark: hsl(241, 44%, 20%);
+  --text-light: hsl(0 0% 100%);
+  --borderClr: hsl(240, 51%, 85%);
+  --cardShadow: hsl(240, 40%, 89%);
+  --placeholder: hsl(240, 51%, 85%);
+}
+
+html {
+  background-color: var(--bg);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: grid;
+  place-items: center;
+}
+
+input,
+button {
+  border: none;
+  outline: none;
+}
