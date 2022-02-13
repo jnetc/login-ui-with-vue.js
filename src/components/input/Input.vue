@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import InputIcon from '@Components/input/InputIcons.vue';
 
-import { defineProps, ref, computed } from 'vue';
+import { ref, computed } from 'vue';
 
 interface Props {
   type?: string;
