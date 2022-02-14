@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import InputIcon from '@Components/input/InputIcons.vue';
+import HideIcon from '@Components/icons/Hide.vue';
+import ShowIcon from '@Components/icons/Show.vue';
 
 import { ref, computed } from 'vue';
 
@@ -22,25 +24,19 @@ const getValue = (event: Event) => {
   emits('get-value', el.value);
 };
 
-const toggleShowPassword = () => {
-  show.value = !show.value;
-  console.log(show.value);
-};
+const toggleShowPassword = () => (show.value = !show.value);
 
 const isPasswordVisible = computed(() => (show.value ? 'text' : props.type));
-
-console.log(show.value);
 </script>
 
 <template>
-  <div class="custom-input">
+  <div class="custom-input" :class="props.checkErr?.level">
     <label class="input-icon" :for="props.name">
       <InputIcon :name="props.name" />
     </label>
     <input
       :id="props.name"
       class="input"
-      :class="props.checkErr?.level"
       :type="isPasswordVisible"
       :placeholder="props.name"
       :value="value"
@@ -51,10 +47,11 @@ console.log(show.value);
       class="show-password"
       @click="toggleShowPassword"
     >
-      eye
+      <ShowIcon v-if="show" />
+      <HideIcon v-if="!show" />
     </span>
+    <div class="input-message">{{ props.checkErr?.msg }}</div>
   </div>
-  <div>{{ props.checkErr?.level }}</div>
 </template>
 
 <style scoped>
@@ -73,9 +70,34 @@ console.log(show.value);
   border-bottom: 2px solid transparent;
   transition: all 0.3s ease-in-out;
 }
+.custom-input::after {
+  content: '';
+  width: 0%;
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: all 0.3s ease-in-out;
+}
+.custom-input.none::after {
+  width: 0%;
+  background-color: transparent;
+}
+.custom-input.red::after {
+  width: 33.33%;
+  background-color: red;
+}
+.custom-input.orange::after {
+  width: 66.66%;
+  background-color: orange;
+}
+.custom-input.green::after {
+  width: 100%;
+  background-color: green;
+}
 
 .input:focus-visible {
-  border-bottom: 2px solid var(--primary);
+  border-bottom: 2px solid var(--borderClr);
 }
 .input::placeholder {
   color: var(--placeholder);
@@ -86,6 +108,13 @@ console.log(show.value);
   transform: translateX(200px);
   opacity: 0;
   font-size: 0.8em;
+}
+.input-message {
+  position: absolute;
+  bottom: -1.2rem;
+  left: 0;
+  font-size: 0.8em;
+  pointer-events: none;
 }
 .input-icon,
 .show-password {
@@ -100,19 +129,6 @@ console.log(show.value);
   right: 0.8rem;
   cursor: pointer;
 }
-.input.red,
-.input:focus-visible.red {
-  border-bottom-color: red;
-}
-.input.yellow,
-.input:focus-visible.yellow {
-  border-bottom-color: yellow;
-}
-.input.green,
-.input:focus-visible.green {
-  border-bottom-color: green;
-}
-
 svg {
   width: 16px;
   height: 16px;

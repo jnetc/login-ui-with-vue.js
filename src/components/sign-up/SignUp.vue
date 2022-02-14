@@ -5,7 +5,7 @@ import Title from '@Components/title/Title.vue';
 import Description from '@Components/description/Description.vue';
 import ButtonSocial from '@Components/button-social/ButtonSocial.vue';
 
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 
 const checkErr = reactive({
   msg: '',
@@ -21,23 +21,32 @@ const data = reactive({
 const getName = (value: string) => (data.name = value);
 const getEmail = (value: string) => (data.email = value);
 const getPassword = (value: string) => {
-  const uppercase = /[A-Z]/g;
-  const digits = /\d/g;
-  const anysigns = /\W+/g;
+  const PASSWORD_LENGTH = 8;
+  const uppercase = /[A-Z]/g.test(value);
+  const digits = /\d/g.test(value);
+  const anysigns = /\W+/g.test(value);
 
-  if (value.length < 8) {
-    checkErr.msg = 'Password is weak';
+  const checkPasswordLength = computed(() =>
+    PASSWORD_LENGTH - value.length >= 0
+      ? `Remains ${PASSWORD_LENGTH - value.length} symbols`
+      : ''
+  );
+
+  if (value.length === 0) {
+    checkErr.msg = 'Fill the password field';
+    checkErr.level = 'none';
+  }
+  if (value.length > 0) {
+    checkErr.msg = `Your password is weak. ${checkPasswordLength.value}`;
     checkErr.level = 'red';
   }
-  if (value.length >= 8 && digits.test(value)) {
-    checkErr.msg = 'Password is avarage';
-    checkErr.level = 'yellow';
+
+  if ((digits || uppercase || anysigns) && value.length >= PASSWORD_LENGTH) {
+    checkErr.msg = 'Good! Now add one digit, sign and uppercase letter';
+    checkErr.level = 'orange';
   }
-  if (
-    (value.length >= 8 && digits.test(value) && uppercase.test(value)) ||
-    anysigns.test(value)
-  ) {
-    checkErr.msg = 'Password is strong';
+  if (value.length >= PASSWORD_LENGTH && digits && uppercase && anysigns) {
+    checkErr.msg = 'Nice! Your password is strong';
     checkErr.level = 'green';
   }
 
