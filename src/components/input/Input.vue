@@ -5,17 +5,19 @@ import ShowIcon from '@Components/icons/Show.vue';
 
 import { ValidationType } from '@Components/sign-up/SignUp.vue';
 
-import { ref, computed } from 'vue';
-
-interface Props {
+//? defineProps have a bug if import interface from other file
+//? https://github.com/vuejs/core/issues/4294
+export interface InputProps {
   type?: string;
   value: string;
   checkErr?: ValidationType;
   name: 'email' | 'password' | 'name';
 }
 
+import { ref, computed } from 'vue';
+
 const emits = defineEmits(['get-value']);
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<InputProps>(), {
   type: 'text',
 });
 

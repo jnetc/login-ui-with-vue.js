@@ -9,9 +9,9 @@ import { useValidationName } from '@Hooks/useValidationName';
 import { useValidationEmail } from '@Hooks/useValidationEmail';
 import { useValidationPassword } from '@Hooks/useValidationPassword';
 
-import { reactive, ref } from 'vue';
-
 export type ValidationType = { msg: string; level: string } | null;
+
+import { reactive, ref } from 'vue';
 
 const isNameValid = ref<ValidationType>(null);
 const isEmailValid = ref<ValidationType>(null);

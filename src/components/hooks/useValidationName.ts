@@ -6,8 +6,6 @@ export const useValidationName = (value: string) => {
   const MIN_LETTERS_LENGTH = 3;
   const onlyLetters = /[\p{N}\p{P}\p{C}\p{S}]/gu.test(value);
 
-  console.log(onlyLetters);
-
   if (value.length === 0) {
     checkErr.msg = '';
     checkErr.level = 'none';
