@@ -5,51 +5,29 @@ import Title from '@Components/title/Title.vue';
 import Description from '@Components/description/Description.vue';
 import ButtonSocial from '@Components/button-social/ButtonSocial.vue';
 
-import { reactive, computed } from 'vue';
+import { useValidationName } from '@Hooks/useValidationName';
+import { useValidationEmail } from '@Hooks/useValidationEmail';
+import { useValidationPassword } from '@Hooks/useValidationPassword';
 
-const checkErr = reactive({
-  msg: '',
-  level: '',
-});
+import { reactive, ref } from 'vue';
 
-const data = reactive({
-  name: '',
-  email: '',
-  password: '',
-});
+export type ValidationType = { msg: string; level: string } | null;
 
-const getName = (value: string) => (data.name = value);
-const getEmail = (value: string) => (data.email = value);
+const isNameValid = ref<ValidationType>(null);
+const isEmailValid = ref<ValidationType>(null);
+const isPasswordValid = ref<ValidationType>(null);
+const data = reactive({ name: '', email: '', password: '' });
+
+const getName = (value: string) => {
+  isNameValid.value = useValidationName(value);
+  data.name = value;
+};
+const getEmail = (value: string) => {
+  isEmailValid.value = useValidationEmail(value);
+  data.email = value;
+};
 const getPassword = (value: string) => {
-  const PASSWORD_LENGTH = 8;
-  const uppercase = /[A-Z]/g.test(value);
-  const digits = /\d/g.test(value);
-  const anysigns = /\W+/g.test(value);
-
-  const checkPasswordLength = computed(() =>
-    PASSWORD_LENGTH - value.length >= 0
-      ? `Remains ${PASSWORD_LENGTH - value.length} symbols`
-      : ''
-  );
-
-  if (value.length === 0) {
-    checkErr.msg = 'Fill the password field';
-    checkErr.level = 'none';
-  }
-  if (value.length > 0) {
-    checkErr.msg = `Your password is weak. ${checkPasswordLength.value}`;
-    checkErr.level = 'red';
-  }
-
-  if ((digits || uppercase || anysigns) && value.length >= PASSWORD_LENGTH) {
-    checkErr.msg = 'Good! Now add one digit, sign and uppercase letter';
-    checkErr.level = 'orange';
-  }
-  if (value.length >= PASSWORD_LENGTH && digits && uppercase && anysigns) {
-    checkErr.msg = 'Nice! Your password is strong';
-    checkErr.level = 'green';
-  }
-
+  isPasswordValid.value = useValidationPassword(value);
   data.password = value;
 };
 
@@ -59,12 +37,13 @@ const sendData = () => {
     email: data.email,
     password: data.password,
   };
-  console.log(user, checkErr);
+  console.log(user, isPasswordValid);
   data.name = '';
   data.email = '';
   data.password = '';
-  checkErr.msg = '';
-  checkErr.level = '';
+  isNameValid.value = null;
+  isEmailValid.value = null;
+  isPasswordValid.value = null;
 };
 </script>
 
@@ -74,18 +53,24 @@ const sendData = () => {
     <ButtonSocial />
     <Description text="or use email for registration:" styled="grey" />
     <form class="form" @submit.prevent="sendData">
-      <Input name="name" :value="data.name" @get-value="getName" />
+      <Input
+        name="name"
+        :value="data.name"
+        :checkErr="isNameValid"
+        @get-value="getName"
+      />
       <Input
         type="email"
         name="email"
         :value="data.email"
+        :checkErr="isEmailValid"
         @get-value="getEmail"
       />
       <Input
         type="password"
         name="password"
         :value="data.password"
-        :checkErr="checkErr"
+        :checkErr="isPasswordValid"
         @get-value="getPassword"
       />
       <ButtonMain name="sign up" styled="fill" />

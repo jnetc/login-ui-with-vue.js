@@ -3,12 +3,14 @@ import InputIcon from '@Components/input/InputIcons.vue';
 import HideIcon from '@Components/icons/Hide.vue';
 import ShowIcon from '@Components/icons/Show.vue';
 
+import { ValidationType } from '@Components/sign-up/SignUp.vue';
+
 import { ref, computed } from 'vue';
 
 interface Props {
   type?: string;
   value: string;
-  checkErr?: { msg: string; level: string };
+  checkErr?: ValidationType;
   name: 'email' | 'password' | 'name';
 }
 
@@ -58,7 +60,7 @@ const isPasswordVisible = computed(() => (show.value ? 'text' : props.type));
 .custom-input {
   width: 19rem;
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 .input {
   width: 19rem;
@@ -111,7 +113,7 @@ const isPasswordVisible = computed(() => (show.value ? 'text' : props.type));
 }
 .input-message {
   position: absolute;
-  bottom: -1.2rem;
+  top: 2.9rem;
   left: 0;
   font-size: 0.8em;
   pointer-events: none;
