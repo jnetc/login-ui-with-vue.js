@@ -9,11 +9,11 @@ export const useValidationEmail = (value: string) => {
     checkErr.msg = '';
     checkErr.level = 'none';
   }
-  if (!email) {
+  if (!email && value.length > 0) {
     checkErr.msg = `Your email is invalid.`;
     checkErr.level = 'red';
   }
-  if (email) {
+  if (email && value.length > 0) {
     checkErr.msg = 'Your email is valid';
     checkErr.level = 'green';
   }
