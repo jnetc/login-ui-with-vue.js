@@ -34,3 +34,5 @@ export const useValidationPassword = (value: string) => {
 
   return checkErr;
 };
+
+export type ValidationType = ReturnType<typeof useValidationPassword> | null;

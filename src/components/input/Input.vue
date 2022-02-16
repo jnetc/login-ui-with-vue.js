@@ -3,7 +3,7 @@ import InputIcon from '@Components/input/InputIcons.vue';
 import HideIcon from '@Components/icons/Hide.vue';
 import ShowIcon from '@Components/icons/Show.vue';
 
-import { ValidationType } from '@Components/sign-up/SignUp.vue';
+import { ValidationType } from '@Hooks/useValidationPassword';
 
 //? defineProps have a bug if import interface from other file
 //? https://github.com/vuejs/core/issues/4294
@@ -39,11 +39,12 @@ const isPasswordVisible = computed(() => (show.value ? 'text' : props.type));
       <InputIcon :name="props.name" />
     </label>
     <input
-      :id="props.name"
       class="input"
+      :id="props.name"
       :type="isPasswordVisible"
       :placeholder="props.name"
       :value="value"
+      :aria-label="`fill ${props.name} field`"
       @input="getValue"
     />
     <span

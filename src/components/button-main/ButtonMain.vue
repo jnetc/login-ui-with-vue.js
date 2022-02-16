@@ -1,9 +1,11 @@
 <script setup lang="ts">
-defineProps<{ name: string; styled: 'fill' | 'border' }>();
+defineProps<{ name: string; styled: 'fill' | 'border'; isDisable?: boolean }>();
 </script>
 
 <template>
-  <button :class="styled" class="btn">{{ name }}</button>
+  <button :class="[isDisable ? '' : 'disable', styled]" class="btn">
+    {{ name }}
+  </button>
 </template>
 
 <style scoped>
@@ -14,10 +16,16 @@ defineProps<{ name: string; styled: 'fill' | 'border' }>();
   border-radius: 50px;
   text-transform: uppercase;
   letter-spacing: 2px;
+  transition: all 0.3s ease-in-out;
   cursor: pointer;
 }
 .fill {
   background-color: var(--primary);
   color: var(--text-light);
+}
+.fill.disable {
+  background-color: var(--secondary);
+  color: var(--placeholder);
+  cursor: default;
 }
 </style>

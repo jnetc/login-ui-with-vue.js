@@ -4,9 +4,27 @@ import ButtonSocialIcons from './ButtonSocialIcons.vue';
 
 <template>
   <div class="social-links">
-    <a class="social-link" href="#"><ButtonSocialIcons name="facebook" /></a>
-    <a class="social-link" href="#"><ButtonSocialIcons name="googleplus" /></a>
-    <a class="social-link" href="#"><ButtonSocialIcons name="linkedin" /></a>
+    <a
+      class="social-link"
+      href="#"
+      role="button"
+      aria-label="sign up with a facebook"
+      ><ButtonSocialIcons name="facebook"
+    /></a>
+    <a
+      class="social-link"
+      href="#"
+      role="button"
+      aria-label="sign up with a googleplye"
+      ><ButtonSocialIcons name="googleplus"
+    /></a>
+    <a
+      class="social-link"
+      href="#"
+      role="button"
+      aria-label="sign up with a linkedin"
+      ><ButtonSocialIcons name="linkedin"
+    /></a>
   </div>
 </template>
 

@@ -9,38 +9,48 @@ import { useValidationName } from '@Hooks/useValidationName';
 import { useValidationEmail } from '@Hooks/useValidationEmail';
 import { useValidationPassword } from '@Hooks/useValidationPassword';
 
-export type ValidationType = { msg: string; level: string } | null;
+import { ValidationType } from '@Hooks/useValidationPassword';
 
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 
 const isNameValid = ref<ValidationType>(null);
 const isEmailValid = ref<ValidationType>(null);
 const isPasswordValid = ref<ValidationType>(null);
-const data = reactive({ name: '', email: '', password: '' });
+const formData = reactive({ name: '', email: '', password: '' });
 
 const getName = (value: string) => {
   isNameValid.value = useValidationName(value);
-  data.name = value;
+  formData.name = value;
 };
 const getEmail = (value: string) => {
   isEmailValid.value = useValidationEmail(value);
-  data.email = value;
+  formData.email = value;
 };
 const getPassword = (value: string) => {
   isPasswordValid.value = useValidationPassword(value);
-  data.password = value;
+  formData.password = value;
 };
 
+const isFormDataDone = computed(() => {
+  return (
+    isNameValid.value?.level === 'green' &&
+    isEmailValid.value?.level === 'green' &&
+    isPasswordValid.value?.level === 'green'
+  );
+});
+
 const sendData = () => {
+  if (!isFormDataDone.value) return;
+
   const user = {
-    name: data.name,
-    email: data.email,
-    password: data.password,
+    name: formData.name,
+    email: formData.email,
+    password: formData.password,
   };
   console.log(user, isPasswordValid);
-  data.name = '';
-  data.email = '';
-  data.password = '';
+  formData.name = '';
+  formData.email = '';
+  formData.password = '';
   isNameValid.value = null;
   isEmailValid.value = null;
   isPasswordValid.value = null;
@@ -55,25 +65,25 @@ const sendData = () => {
     <form class="form" @submit.prevent="sendData">
       <Input
         name="name"
-        :value="data.name"
+        :value="formData.name"
         :checkErr="isNameValid"
         @get-value="getName"
       />
       <Input
         type="email"
         name="email"
-        :value="data.email"
+        :value="formData.email"
         :checkErr="isEmailValid"
         @get-value="getEmail"
       />
       <Input
         type="password"
         name="password"
-        :value="data.password"
+        :value="formData.password"
         :checkErr="isPasswordValid"
         @get-value="getPassword"
       />
-      <ButtonMain name="sign up" styled="fill" />
+      <ButtonMain name="sign up" styled="fill" :isDisable="isFormDataDone" />
     </form>
   </section>
 </template>
