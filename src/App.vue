@@ -18,7 +18,7 @@ import SignUp from '@Components/sign-up/SignUp.vue';
 @import url('../styles/global.css');
 
 #app {
-  width: 800px;
+  width: var(--app-width);
   height: 500px;
   position: relative;
   overflow: hidden;

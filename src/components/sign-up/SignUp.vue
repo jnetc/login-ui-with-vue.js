@@ -83,7 +83,9 @@ const sendData = () => {
         :checkErr="isPasswordValid"
         @get-value="getPassword"
       />
-      <ButtonMain name="sign up" styled="fill" :isDisable="isFormDataDone" />
+      <ButtonMain styled="fill" :isDisable="!isFormDataDone"
+        >sign up</ButtonMain
+      >
     </form>
   </section>
 </template>

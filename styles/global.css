@@ -17,6 +17,9 @@
   --borderClr: hsl(240, 51%, 85%);
   --cardShadow: hsl(240, 40%, 89%);
   --placeholder: hsl(240, 51%, 85%);
+
+  --app-width: 800px;
+  --switcher-width: 320px;
 }
 
 html {
@@ -37,4 +40,22 @@ input,
 button {
   border: none;
   outline: none;
+}
+.btn {
+  width: 11rem;
+  height: 2.8rem;
+  margin-block-start: 1rem;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.border {
+  background-color: transparent;
+  border: 2px solid var(--main);
+  color: var(--text-light);
+  position: relative;
+  z-index: 200;
 }

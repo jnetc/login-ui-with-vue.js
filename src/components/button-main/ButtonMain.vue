@@ -1,24 +1,21 @@
 <script setup lang="ts">
-defineProps<{ name: string; styled: 'fill' | 'border'; isDisable?: boolean }>();
+const emits = defineEmits(['move-right']);
+defineProps<{ styled: 'fill' | 'border'; isDisable?: boolean }>();
+
+const clickEvent = () => emits('move-right');
 </script>
 
 <template>
-  <button :class="[isDisable ? '' : 'disable', styled]" class="btn">
-    {{ name }}
+  <button
+    :class="[isDisable && 'disable', styled]"
+    class="btn"
+    @click="clickEvent"
+  >
+    <slot></slot>
   </button>
 </template>
 
 <style scoped>
-.btn {
-  width: 11rem;
-  height: 2.8rem;
-  margin-block-start: 1rem;
-  border-radius: 50px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
-}
 .fill {
   background-color: var(--primary);
   color: var(--text-light);
