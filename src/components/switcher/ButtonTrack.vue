@@ -40,6 +40,7 @@ const click = () => {
   transition: all 1s cubic-bezier(0.85, 0, 0.63, 0.79);
 }
 .button-track.move-button {
+  transition: all 1s cubic-bezier(0.55, 0, 0.63, 0.79);
   transform: translateX(calc(var(--app-width) - var(--switcher-width)));
 }
 .btn.resize-button {
@@ -63,7 +64,6 @@ const click = () => {
   align-items: center;
   position: absolute;
   inset: 0;
-  /* transform: translateX(-45px); */
 }
 
 .txt-animate-enter-from {
