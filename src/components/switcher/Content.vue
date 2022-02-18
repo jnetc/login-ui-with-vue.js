@@ -22,6 +22,12 @@ defineProps<{ title: string; description: string }>();
   flex: 0 1 var(--switcher-width);
   padding: 2rem;
   background-color: var(--primary);
-  transition: all 0.3s ease-in-out;
+  transition: all 1s ease-in-out;
+}
+.content.left-content {
+  transform: translateX(-30px);
+}
+.content.right-content {
+  transform: translateX(60px);
 }
 </style>

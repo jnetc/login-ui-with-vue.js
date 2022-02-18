@@ -9,8 +9,6 @@ const moveAndResize = ref(false);
 const click = () => {
   emits('move-right');
   moveAndResize.value = !moveAndResize.value;
-  console.log('click_button');
-
   setTimeout(() => {
     moveAndResize.value = !moveAndResize.value;
   }, 1000);

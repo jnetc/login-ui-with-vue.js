@@ -9,8 +9,6 @@ const moveAndResize = ref(false);
 const moveSwitcherHandler = () => {
   isMovedRight.value = !isMovedRight.value;
   moveAndResize.value = !moveAndResize.value;
-  console.log('moveSwitcherHandler_switch');
-
   setTimeout(() => {
     moveAndResize.value = !moveAndResize.value;
   }, 1000);
@@ -29,10 +27,12 @@ const moveSwitcherHandler = () => {
       <Content
         title="welcome back!"
         description="To keep connected with us please login with your personal info"
+        :class="[isMovedRight && 'left-content']"
       />
       <Content
         title="hello, friend!"
         description="Enter your personal details and start journey with us"
+        :class="[!isMovedRight && 'right-content']"
       />
       <ButtonTrack
         :isMovedRight="isMovedRight"
@@ -49,11 +49,12 @@ const moveSwitcherHandler = () => {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  transition: all 1s cubic-bezier(0.85, 0, 0.63, 0.79);
+  transition: all 1s cubic-bezier(0.55, 0, 0.63, 0.79);
   transform: translateX(0px);
   z-index: 10;
 }
 .switcher.move-switcher-right {
+  transition: all 1s cubic-bezier(0.85, 0, 0.63, 0.79);
   transform: translateX(calc(var(--app-width) - var(--switcher-width)));
 }
 .switcher.resize-switcher {
@@ -74,9 +75,10 @@ const moveSwitcherHandler = () => {
   justify-content: space-between;
   overflow: hidden;
   background-color: var(--primary);
-  transition: all 1s cubic-bezier(0.85, 0, 0.63, 0.79);
+  transition: all 1s cubic-bezier(0.55, 0, 0.63, 0.79);
 }
 .container.move-container-left {
+  transition: all 1s cubic-bezier(0.85, 0, 0.63, 0.79);
   transform: translateX(calc(var(--switcher-width) - var(--app-width)));
 }
 </style>
