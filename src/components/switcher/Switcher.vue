@@ -25,18 +25,18 @@ const moveSwitcherHandler = () => {
   >
     <div class="container" :class="{ 'move-container-left': isMovedRight }">
       <Content
-        title="welcome back!"
+        title="Welcome Back!"
         description="To keep connected with us please login with your personal info"
         :class="[isMovedRight && 'left-content']"
       />
       <Content
-        title="hello, friend!"
+        title="Hello, Friend!"
         description="Enter your personal details and start journey with us"
         :class="[!isMovedRight && 'right-content']"
       />
       <ButtonTrack
         :isMovedRight="isMovedRight"
-        @move-right="moveSwitcherHandler"
+        @button-action="moveSwitcherHandler"
       />
     </div>
   </section>

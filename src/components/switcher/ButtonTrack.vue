@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const emits = defineEmits(['move-right']);
+const emits = defineEmits(['button-action']);
 defineProps<{ isMovedRight: boolean }>();
 
 const moveAndResize = ref(false);
 
-const click = () => {
-  emits('move-right');
+const buttonSwitcherHandler = () => {
+  emits('button-action');
   moveAndResize.value = !moveAndResize.value;
   setTimeout(() => {
     moveAndResize.value = !moveAndResize.value;
@@ -20,7 +20,7 @@ const click = () => {
     <button
       class="btn border"
       :class="{ 'resize-button': moveAndResize }"
-      @click="click"
+      @click="buttonSwitcherHandler"
     >
       <Transition name="txt-animate">
         <p class="txt-btn" v-if="isMovedRight">sign up</p>

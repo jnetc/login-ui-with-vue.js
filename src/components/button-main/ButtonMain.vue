@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const emits = defineEmits(['move-right']);
+const emits = defineEmits(['button-action']);
 defineProps<{ styled: 'fill' | 'border'; isDisable?: boolean }>();
 
-const clickEvent = () => emits('move-right');
+const clickEvent = () => emits('button-action');
 </script>
 
 <template>

@@ -12,6 +12,7 @@ export interface InputProps {
   value: string;
   checkErr?: ValidationType;
   name: 'email' | 'password' | 'name';
+  id: string;
 }
 
 import { ref, computed } from 'vue';
@@ -35,12 +36,12 @@ const isPasswordVisible = computed(() => (show.value ? 'text' : props.type));
 
 <template>
   <div class="custom-input" :class="props.checkErr?.level">
-    <label class="input-icon" :for="props.name">
+    <label class="input-icon" :for="props.id">
       <InputIcon :name="props.name" />
     </label>
     <input
       class="input"
-      :id="props.name"
+      :id="props.id"
       :type="isPasswordVisible"
       :placeholder="props.name"
       :value="value"

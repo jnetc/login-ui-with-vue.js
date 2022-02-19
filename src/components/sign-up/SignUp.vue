@@ -59,17 +59,19 @@ const sendData = () => {
 
 <template>
   <section class="sign-up">
-    <Title name="create account" styled="green" />
+    <Title styled="green">Create Account</Title>
     <ButtonSocial />
-    <Description text="or use email for registration:" styled="grey" />
+    <Description styled="grey">or use email for registration:</Description>
     <form class="form" @submit.prevent="sendData">
       <Input
+        id="sign-up-name"
         name="name"
         :value="formData.name"
         :checkErr="isNameValid"
         @get-value="getName"
       />
       <Input
+        id="sign-up-email"
         type="email"
         name="email"
         :value="formData.email"
@@ -77,6 +79,7 @@ const sendData = () => {
         @get-value="getEmail"
       />
       <Input
+        id="sign-up-password"
         type="password"
         name="password"
         :value="formData.password"
@@ -99,6 +102,9 @@ const sendData = () => {
   align-items: center;
   flex-direction: column;
   margin-left: auto;
+
+  grid-column: 1;
+  grid-row: 1;
 }
 .form {
   display: flex;

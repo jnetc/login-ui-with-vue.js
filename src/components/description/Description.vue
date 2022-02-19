@@ -1,9 +1,9 @@
 <script setup lang="ts">
-defineProps<{ text: string; styled: 'white' | 'grey' }>();
+defineProps<{ styled: 'white' | 'grey' }>();
 </script>
 
 <template>
-  <p :class="styled" class="desc">{{ text }}</p>
+  <p :class="styled" class="desc"><slot></slot></p>
 </template>
 
 <style scoped>

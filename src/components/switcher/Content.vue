@@ -7,8 +7,8 @@ defineProps<{ title: string; description: string }>();
 
 <template>
   <div class="content">
-    <Title :name="title" styled="white" />
-    <Description :text="description" styled="white" />
+    <Title styled="white">{{ title }}</Title>
+    <Description styled="white">{{ description }}</Description>
   </div>
 </template>
 
