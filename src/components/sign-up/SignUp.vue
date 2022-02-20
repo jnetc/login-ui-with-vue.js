@@ -4,14 +4,18 @@ import ButtonMain from '@Components/button-main/ButtonMain.vue';
 import Title from '@Components/title/Title.vue';
 import Description from '@Components/description/Description.vue';
 import ButtonSocial from '@Components/button-social/ButtonSocial.vue';
-
+// Type
+import Store from '@Stores/store';
+// Hooks
 import { useValidationName } from '@Hooks/useValidationName';
 import { useValidationEmail } from '@Hooks/useValidationEmail';
 import { useValidationPassword } from '@Hooks/useValidationPassword';
 
 import { ValidationType } from '@Hooks/useValidationPassword';
 
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive, ref, inject } from 'vue';
+
+const store = inject<typeof Store>('store');
 
 const isNameValid = ref<ValidationType>(null);
 const isEmailValid = ref<ValidationType>(null);
@@ -58,58 +62,86 @@ const sendData = () => {
 </script>
 
 <template>
-  <section class="sign-up">
-    <Title styled="green">Create Account</Title>
-    <ButtonSocial />
-    <Description styled="grey">or use email for registration:</Description>
-    <form class="form" @submit.prevent="sendData">
-      <Input
-        id="sign-up-name"
-        name="name"
-        :value="formData.name"
-        :checkErr="isNameValid"
-        @get-value="getName"
-      />
-      <Input
-        id="sign-up-email"
-        type="email"
-        name="email"
-        :value="formData.email"
-        :checkErr="isEmailValid"
-        @get-value="getEmail"
-      />
-      <Input
-        id="sign-up-password"
-        type="password"
-        name="password"
-        :value="formData.password"
-        :checkErr="isPasswordValid"
-        @get-value="getPassword"
-      />
-      <ButtonMain styled="fill" :isDisable="!isFormDataDone"
-        >sign up</ButtonMain
-      >
-    </form>
+  <section class="sign-up" :class="{ shift: !store?.state.isSignIn }">
+    <Transition name="sign-up">
+      <KeepAlive>
+        <div class="container" v-if="!store?.state.isSignIn">
+          <Title styled="green">Create Account</Title>
+          <ButtonSocial />
+          <Description styled="grey"
+            >or use email for registration:</Description
+          >
+          <form class="center-content" @submit.prevent="sendData">
+            <Input
+              id="sign-up-name"
+              name="name"
+              :value="formData.name"
+              :checkErr="isNameValid"
+              @get-value="getName"
+            />
+            <Input
+              id="sign-up-email"
+              type="email"
+              name="email"
+              :value="formData.email"
+              :checkErr="isEmailValid"
+              @get-value="getEmail"
+            />
+            <Input
+              id="sign-up-password"
+              type="password"
+              name="password"
+              :value="formData.password"
+              :checkErr="isPasswordValid"
+              @get-value="getPassword"
+            />
+            <ButtonMain styled="fill" :isDisable="!isFormDataDone"
+              >sign up</ButtonMain
+            >
+          </form>
+        </div>
+      </KeepAlive>
+    </Transition>
   </section>
 </template>
 
 <style scoped>
 .sign-up {
-  width: 480px;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
   margin-left: auto;
-
-  grid-column: 1;
-  grid-row: 1;
 }
-.form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+.sign-up::after {
+  left: 0;
+}
+
+/* TRANSITION */
+.sign-up-enter-from,
+.sign-up-leave-to {
+  transform: translateX(-150px);
+  z-index: -1;
+}
+.sign-up-enter-active {
+  transition: all 0.7s cubic-bezier(0.55, 0, 0.63, 0.79);
+  transition-delay: 0.3s;
+}
+.sign-up-leave-active {
+  transition: all 0.7s cubic-bezier(0.55, 0, 0.63, 0.79);
+}
+.sign-up-enter-to,
+.sign-up-leave-from {
+  transform: translateX(0px);
+  z-index: 5;
+}
+
+/* pseudo */
+.sign-up-enter-from::after {
+  width: calc(var(--form-width) - var(--switcher-width));
+  transform: translateX(0);
+}
+.sign-up-enter-active::after {
+  transition: all 0.7s cubic-bezier(0.55, 0, 0.63, 0.79);
+  transition-delay: 0.3s;
+}
+.sign-up-enter-to::after {
+  transform: translateX(calc(var(--form-width) - var(--switcher-width)));
 }
 </style>

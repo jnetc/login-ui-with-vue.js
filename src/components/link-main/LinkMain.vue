@@ -14,7 +14,7 @@ const clickEvent = () => emits('link-action');
 <style scoped>
 .link-main {
   position: relative;
-  margin-block-end: 3rem;
+  margin-block: 0.5rem 2.5rem;
   color: var(--text-dark);
   font-weight: 400;
   text-decoration: none;

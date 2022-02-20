@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import Content from '@Components/switcher/Content.vue';
 import ButtonTrack from './ButtonTrack.vue';
-import { ref } from 'vue';
+import { animationOptimization } from '@Helpers/functions';
+
+import { ref, inject } from 'vue';
+// Type
+import Store from '@Stores/store';
+
+const store = inject<typeof Store>('store');
 
 const isMovedRight = ref(false);
 const moveAndResize = ref(false);
@@ -9,8 +15,12 @@ const moveAndResize = ref(false);
 const moveSwitcherHandler = () => {
   isMovedRight.value = !isMovedRight.value;
   moveAndResize.value = !moveAndResize.value;
-  setTimeout(() => {
+  store?.switchSize(isMovedRight.value);
+  animationOptimization(1000);
+  // remove 'resize-switcher' class after
+  const timer = setTimeout(() => {
     moveAndResize.value = !moveAndResize.value;
+    clearTimeout(timer);
   }, 1000);
 };
 </script>
@@ -23,7 +33,10 @@ const moveSwitcherHandler = () => {
       moveAndResize && 'resize-switcher',
     ]"
   >
-    <div class="container" :class="{ 'move-container-left': isMovedRight }">
+    <div
+      class="switcher-container"
+      :class="{ 'move-container-left': isMovedRight }"
+    >
       <Content
         title="Welcome Back!"
         description="To keep connected with us please login with your personal info"
@@ -51,7 +64,7 @@ const moveSwitcherHandler = () => {
   overflow: hidden;
   transition: all 1s cubic-bezier(0.55, 0, 0.63, 0.79);
   transform: translateX(0px);
-  z-index: 10;
+  z-index: 50;
 }
 .switcher.move-switcher-right {
   transition: all 1s cubic-bezier(0.85, 0, 0.63, 0.79);
@@ -66,7 +79,7 @@ const moveSwitcherHandler = () => {
   }
 }
 
-.container {
+.switcher-container {
   height: 100%;
   width: var(--app-width);
   display: flex;
@@ -77,7 +90,7 @@ const moveSwitcherHandler = () => {
   background-color: var(--primary);
   transition: all 1s cubic-bezier(0.55, 0, 0.63, 0.79);
 }
-.container.move-container-left {
+.switcher-container.move-container-left {
   transition: all 1s cubic-bezier(0.85, 0, 0.63, 0.79);
   transform: translateX(calc(var(--switcher-width) - var(--app-width)));
 }

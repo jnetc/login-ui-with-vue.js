@@ -20,6 +20,7 @@
 
   --app-width: 800px;
   --switcher-width: 320px;
+  --form-width: 480px;
 }
 
 html {
@@ -58,4 +59,44 @@ button {
   color: var(--text-light);
   position: relative;
   z-index: 200;
+}
+
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.sign-in,
+.sign-up {
+  grid-column: 1;
+  grid-row: 1;
+  width: var(--form-width);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /* margin-right: auto; */
+  position: relative;
+  overflow: hidden;
+}
+.sign-in::after,
+.sign-up::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* right: 0; */
+  background-color: var(--main);
+}
+
+.container {
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
 }

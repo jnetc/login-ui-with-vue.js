@@ -17,7 +17,9 @@
     "noUnusedParameters": true,
     "paths": {
       "@Components/*": ["./src/components/*"],
+      "@Helpers/*": ["./src/helpers/*"],
       "@Hooks/*": ["./src/components/hooks/*"],
+      "@Stores/*": ["./src/stores/*"],
       "@Styles/*": ["./styles/*"]
     },
     "pretty": true,
